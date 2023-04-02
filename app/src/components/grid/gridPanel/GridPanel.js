@@ -64,12 +64,24 @@ Ext.define('MyCrudApp.components.grid.GridPanel',{
                         xtype: 'button',
                         text: 'Cancel',
                         align: 'left',
-                        action: 'cancel'
+                        action: 'cancel',
                     }, {
                         xtype: 'button',
                         text: 'Submit',
                         align: 'right',
-                        action: 'submit'
+                        action: 'submit',
+                        handler: function() {
+                            var store = me.getStore();
+                            store.sync({
+                                callback: function(batch, options, success) {
+                                    if (success) {
+                                        console.log('Dados salvos com sucesso!');
+                                    } else {
+                                        console.log('Erro ao salvar dados!');
+                                    }
+                                }
+                            });
+                        }
                     }]
                 },
             }

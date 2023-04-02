@@ -45,13 +45,20 @@ app.post('/analyst', (req, res) => {
       return res.status(500).send('Erro interno do servidor');
     }
 
-    res.json({ id: this.lastID });
+    res.status(200).json({
+      data:{
+          success : true,
+          message:"Registro criado com sucesso!",
+          id:this.lastID 
+        }
+      })
   });
 });
 
-app.put('/analyst/:id', (req, res) => {
-  const id = req.params.id;
-  const { name, email, phone } = req.body;
+app.put('/analyst', (req, res) => {
+
+  let { id ,name, email, phone } = req.body;
+
 
   db.run('UPDATE analyst SET name = ?, email = ?, phone = ? WHERE id = ?', [name, email, phone, id], function(err) {
     if (err) {
@@ -63,12 +70,18 @@ app.put('/analyst/:id', (req, res) => {
       return res.status(404).send('Analista não encontrado');
     }
 
-    res.sendStatus(204);
+    res.status(200).json({
+      data:{
+        success : true,
+        message:"Dados atualizados com suecesso"
+        }
+      })
   });
 });
 
-app.delete('/analyst/:id', (req, res) => {
-  const id = req.params.id;
+app.delete('/analyst', (req, res) => {
+  let { id } = req.body;
+
 
   db.run('DELETE FROM analyst WHERE id = ?', id, function(err) {
     if (err) {
@@ -80,7 +93,12 @@ app.delete('/analyst/:id', (req, res) => {
       return res.status(404).send('Analista não encontrado');
     }
 
-    res.sendStatus(204);
+    res.status(200).json({
+      data:{
+        success : true,
+        message:"Dados removido com suecesso"
+        }
+      })
   });
 });
 

@@ -4,5 +4,6 @@
 /node_modules
 package-lock.json
 sencha-error*
+/server/database.db
 /server/node_modules
 /server/package-lock.json

@@ -24,12 +24,5 @@ Ext.define('MyCrudApp.view.AnalystView',{
             dataIndex: 'email',
             width: 230
         }
-    ],
-    listeners: {
-        canceledit: 'onEditCancelled',
-        itemclick: function(view, record, item, index, e, eOpts) {
-            console.log('Clicou no item: ', record.get('id'));
-        }
-    }
-
+    ]
 })

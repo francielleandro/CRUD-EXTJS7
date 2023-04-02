@@ -7,17 +7,14 @@ Ext.define('MyCrudApp.store.AnalystStore', {
     model: 'MyCrudApp.model.AnalystModel', 
     autoLoad: true,
     proxy: {
-        type: 'rest',
-        url: 'http://localhost:3000/analyst',
-        actionMethods: {
-            create: 'POST',
-            read: 'GET',
-            update: 'PUT',
-            destroy: 'DELETE'
-        },
-        reader: {
-            type: 'json',
-            rootProperty: 'data'
-        }
-    }
+        type: 'baseurl',
+        url: 'analyst'
+    },
+    // listeners: {
+    //     write: function(store, operation) {
+    //         if (operation.wasSuccessful()) {
+    //             store.reload();
+    //         }
+    //     }
+    // }
 });
