@@ -1,16 +1,18 @@
 const express = require('express');
+const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
 const db = new sqlite3.Database('./database.db');
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/analyst', (req, res) => {
   db.all('SELECT * FROM analyst', (err, rows) => {
     if (err) {
       console.error(err.message);
-      return res.status(500).send('Erro interno do servidors');
+      return res.status(500).send('Erro interno do servidor');
     }
 
     res.json(rows);

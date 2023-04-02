@@ -5,15 +5,19 @@ Ext.define('MyCrudApp.store.AnalystStore', {
         'MyCrudApp.model.AnalystModel',
     ],
     model: 'MyCrudApp.model.AnalystModel', 
-    data: { items: [
-        { id : 1, name: 'Jean Luc',   email: "jeanluc.picard@enterprise.com"},
-        { id : 2, name: 'Jean2 Luc',   email: "jeanluc.picard@enterprise.com"},
-    ]},
+    autoLoad: true,
     proxy: {
-        type: 'memory',
+        type: 'rest',
+        url: 'http://localhost:3000/analyst',
+        actionMethods: {
+            create: 'POST',
+            read: 'GET',
+            update: 'PUT',
+            destroy: 'DELETE'
+        },
         reader: {
             type: 'json',
-            rootProperty: 'items'
+            rootProperty: 'data'
         }
     }
 });
