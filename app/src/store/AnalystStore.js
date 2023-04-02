@@ -9,12 +9,5 @@ Ext.define('MyCrudApp.store.AnalystStore', {
     proxy: {
         type: 'baseurl',
         url: 'analyst'
-    },
-    // listeners: {
-    //     write: function(store, operation) {
-    //         if (operation.wasSuccessful()) {
-    //             store.reload();
-    //         }
-    //     }
-    // }
+    }
 });

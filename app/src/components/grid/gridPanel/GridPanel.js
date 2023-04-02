@@ -2,13 +2,38 @@ Ext.define('MyCrudApp.components.grid.GridPanel',{
     extend : 'Ext.grid.Grid',
     xtype : 'mc.gridpanel',
     grouped: false,
-    editInFormPanel : true,
+    editInFormPanel : false,
     constructor: function(config) {
         var me = this;
         me.callParent(config)
         me.columns = me.getColumnsByModel();
         me.setColumns(me.columns);
         me.setPlugins(me.getPluginConfig());
+    },
+    listeners : {
+        childdoubletap : function(event, location, eOpts ){
+            var me = this;
+            var record = location.record;
+            if(me.editInFormPanel){
+                return;
+            }
+            var form = Ext.create({
+                xtype: 'formbase',
+                record: record // passa o registro selecionado para o formulário
+              });
+            var formWindow = Ext.create({
+                xtype: 'window',
+                title: 'Edit Record',
+                modal: true,
+                items: [form]
+              });
+
+              form.on({close:function(){
+                formWindow.close();
+              }});
+
+              formWindow.show();
+        }
     },
     getColumnsByModel: function(){
         var me = this;
@@ -75,9 +100,9 @@ Ext.define('MyCrudApp.components.grid.GridPanel',{
                             store.sync({
                                 callback: function(batch, options, success) {
                                     if (success) {
-                                        console.log('Dados salvos com sucesso!');
+                                        // console.log('Dados salvos com sucesso!');
                                     } else {
-                                        console.log('Erro ao salvar dados!');
+                                        // console.log('Erro ao salvar dados!');
                                     }
                                 }
                             });

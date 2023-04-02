@@ -56,11 +56,25 @@ app.post('/analyst', (req, res) => {
 });
 
 app.put('/analyst', (req, res) => {
+  const id = req.body.id;
 
-  let { id ,name, email, phone } = req.body;
+  const updates = [];
+  const values = [];
 
+  Object.keys(req.body).forEach((key) => {
+    if (key !== 'id') {
+      updates.push(`${key} = ?`);
+      values.push(req.body[key]);
+    }
+  });
 
-  db.run('UPDATE analyst SET name = ?, email = ?, phone = ? WHERE id = ?', [name, email, phone, id], function(err) {
+  if (updates.length === 0) {
+    return res.status(400).send('Nenhum campo informado para atualização');
+  }
+
+  values.push(id);
+
+  db.run(`UPDATE analyst SET ${updates.join(', ')} WHERE id = ?`, values, function(err) {
     if (err) {
       console.error(err.message);
       return res.status(500).send('Erro interno do servidor');
