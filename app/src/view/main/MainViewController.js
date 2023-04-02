@@ -34,6 +34,7 @@ Ext.define('MyCrudApp.view.main.MainViewController', {
 				}
 			);
 		}
+		// console.log(centerview);
 		centerview.setActiveItem(xtype);
 		menuview.setSelection(node);
 		var vm = this.getViewModel(); 

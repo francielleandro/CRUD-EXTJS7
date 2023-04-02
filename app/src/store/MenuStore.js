@@ -16,14 +16,9 @@ Ext.define('MyCrudApp.store.MenuStore',{
                 "xtype": "homeview", 
                 "leaf": true 
             },{ 
-                "text": "Personnel",
+                "text": "Analista",
                 "iconCls": "x-fa fa-table", 
-                "xtype": "personnelview",
-                "leaf": true 
-            },{ 
-                "text": "Panel",
-                "iconCls": "x-fa fa-table", 
-                "xtype": "panel",
+                "xtype": "analystview",
                 "leaf": true 
             }
         ]
