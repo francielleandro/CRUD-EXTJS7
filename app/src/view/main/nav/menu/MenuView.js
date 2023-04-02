@@ -5,10 +5,12 @@ Ext.define('MyCrudApp.view.nav.menu.MenuView', {
     ui: 'nav',
     requires: [
         'Ext.data.TreeStore',
+        'MyCrudApp.model.MenuModel',
+        'MyCrudApp.store.MenuStore'
     ],
     scrollable: true,
+    store : Ext.create('MyCrudApp.store.MenuStore'),
     bind: { 
-        store: '{menu}', 
         micro: '{navCollapsed}' 
     },
     expanderFirst: false,

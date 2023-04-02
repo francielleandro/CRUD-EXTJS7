@@ -23,19 +23,5 @@ Ext.define('MyCrudApp.view.main.MainViewModel', {
 		detailview_width: function(get) {
 			return get('detailCollapsed') ? get('detailview_min_width') : get('detailview_max_width');
 		}
-	},
-	stores: {
-		menu: {
-			"type": "tree",
-			"root": {
-				"expanded": true,
-				"children": [
-          { "text": "Home", "iconCls": "x-fa fa-home", "xtype": "homeview", "leaf": true },
-					{ "text": "Personnel", "iconCls": "x-fa fa-table", "xtype": "personnelview","leaf": true },
-					//add new items on the next line (from sencha-node generate viewpackage)
-
-				]
-			}
-		}
 	}
 });

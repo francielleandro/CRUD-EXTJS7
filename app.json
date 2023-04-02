@@ -4,7 +4,7 @@
   "version": "1.0.0.0",
   "framework": "ext",
   "template": "moderndesktop",
-  "indexHtmlPath": "index.html",
+  "indexHtmlPath": "public/index.html",
   "requires": [
     "font-awesome"
   ],
@@ -22,7 +22,11 @@
     }
   },
 
-  "classpath": ["app/shared/src","app/${build.id}/src"],
+  "classpath": [
+    "app",
+    "app/shared/src",
+    "app/${build.id}/src"
+  ],
   "overrides": ["app/shared/overrides","app/${build.id}/overrides"],
 
   "sass": {
@@ -50,7 +54,7 @@
 
   "output": {
     "base": "${workspace.build.dir}/${build.environment}/${app.name}",
-    "page": "index.html",
+    "page": "public/index.html",
     "manifest": "generatedFiles/${build.id}.json",
     "js": "generatedFiles/${build.id}/app.js",
     "appCache": {"enable": false},
@@ -124,7 +128,7 @@
   },
 
   "appCache": {
-    "cache": ["index.html"],
+    "cache": ["public/index.html"],
     "network": ["*"],
     "fallback": []
   },

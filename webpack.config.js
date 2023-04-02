@@ -39,7 +39,7 @@ module.exports = async function (env) {
   portfinder.basePort = (env && env.port) || 1962
   return portfinder.getPortPromise().then(port => {
     const plugins = [
-      new HtmlWebpackPlugin({ template: "index.html", hash: true, inject: "body" }),
+      new HtmlWebpackPlugin({ template: "public/index.html", hash: true, inject: "body" }),
       new BaseHrefWebpackPlugin({ baseHref: basehref }),
       new ExtWebpackPlugin({
         framework: framework,
