@@ -47,7 +47,7 @@ A aplicação web esta na raiz do projeto, a pasta src contem os fontes.
 
 ## Instale as dependências:
 
-Para utilizar a aplicação foi utilizado a versão 8.11.0 do nodejs, as verões mais novas podem não ser compativeis com o EXTJS7.0 CE
+Para utilizar a aplicação foi utilizado a versão 8.11.0 do nodejs, as vesões mais novas podem não ser compativeis com o EXTJS 7.0CE
 
 ### npm install
 
