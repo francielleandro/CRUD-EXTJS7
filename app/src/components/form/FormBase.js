@@ -2,20 +2,45 @@ Ext.define('MyCrudApp.components.form.FormBase', {
     extend: 'Ext.form.Panel',
     xtype: 'formbase',
     alias: 'widget.formbase',
-    width: 'auto',
-    height: 'auto',
+    scrollable: true,
+    layout: {
+        type :'form',
+        labelWidth :80,
+        itemSpacing:25
+    },
+    maxWidth: '600',
+    maxHeight: '400',
+    constructor: function(config) {
+        var me = this;
+        config = config || {};
+        if(me.config.items && me.config.items.length > 0){
+            config.items = me.config.items;
+        }
+
+        var items = me.buildItems(config);
+        
+        if(items){
+            config.items = items;
+        }
+        
+        me.callParent([config]);
+    },
+    //monta o form baseado no model da store do grid
     buildItems: function(config) {
-        if (!config) {
+        if (!config || !config.record) {
             return null;
         }
-        var me = this,
-            store = config.record.store,
-            model = store.getModel(),
-            fields = model.getFields(),
-            items = [];
+
+        var store = config.store || config.record.store;
+        var model = store ? store.getModel() : config.record ;
+        var fields = model.getFields();
+        var items = [];
         
         Ext.Array.each(fields, function(field) {
             var fieldName = field.getName();
+            if(fieldName === "selected"){
+                return
+            }
             var fieldConfig = {
                 name: fieldName,
                 label: field.title ? field.title : (fieldName.charAt(0).toUpperCase() + fieldName.slice(1)),
@@ -89,67 +114,78 @@ Ext.define('MyCrudApp.components.form.FormBase', {
     
         return items;
     },
-    constructor: function(config) {
+    updateStore : function(store){
+        return new Promise(function(resolve, reject) {
+            store.sync({
+                callback: function() {
+                    resolve(true);
+                },
+                failure: function() {
+                    reject(false);
+                }
+            });
+        });
+    },
+    //salva o record selecionado com os novos valores do form, tambem realiza algumas validaçoes
+    saveRecord: async function(){
         var me = this;
-        config = config || {};
-        if(me.config.items && me.config.items.length > 0){
-            config.items = me.config.items;
-        }
-
-        var items = me.buildItems(config);
+        me.validate();
+        var isValid = me.isValid();
+        if (isValid) {
+            var record = me.getRecord();
+            delete record.data.selected;//o atributo selected é utilizado para o checkcolumn e não deve ser enviado
+            var store = me.config.store || record.store;
+            var fields = me.getFields();
+            record.dirty = false; //após remover o atributo selected do record o dirty fica igual a true, por isso é preciso forçar para false novamente
+            Ext.Object.each(fields, function(name, field) {
+                if(name !== 'selected'){
+                    var value = field.getValue();
+                    record.set(name, value);
+                }
+                else {
+                    me.remove(field);//o atributo selected é utilizado para o checkcolumn e não deve ser enviado
+                }
+            });
         
-        if(items){
-            config.items = items;
+            if (record.dirty) {
+                var success = await me.updateStore(store);
+                if(success){
+                    me.close();
+                    Ext.Msg.alert('Registro alterado', 'Registro alterado com sucesso');
+                    store.reload();
+                }else{
+                    me.reset();
+                    me.close();
+                    Ext.Msg.alert('Falha', 'Falha ao alterar o registro');
+                    store.reload();
+                }
+            } else {
+                me.reset();
+                me.close();
+                Ext.Msg.alert('Não há alterações', 'Nenhuma modificação foi realizada');
+            }
+        } else {
+            Ext.Msg.alert('Campos obrigatórios', 'Por favor, preencha todos os campos obrigatórios para continuar');
         }
-        
-        me.callParent([config]);
     },
     buttons: [{
         text: 'Save',
+        scope: this,
+        handler:function(button) {
+            var me = this;
+            var form = button.up('formpanel');
+            form.saveRecord();
+        }
+    },{
+        text: 'Cancel',
         handler: function() {
             var me = this;
             var form = me.up('formpanel');
-            form.validate();
-            var isValid = form.isValid();
-            if (isValid) {
-                    var record = form.getRecord();
-                    var store = record.store;
-                    var fields = form.getFields();
-                
-                    Ext.Object.each(fields, function(name, field) {
-                        var value = field.getValue();
-                        var isValid = field.isValid();
-                        record.set(name, value);
-                    });
-                
-                    if (record.dirty) {
-                        store.sync({
-                            callback: function() {
-                                Ext.Msg.alert('Sucesso', 'Registro modificado com sucesso');
-                                form.close();
-                            },
-                            failure: function() {
-                                Ext.Msg.alert('Falha', 'Falha ao realizar operação');
-                                form.close();
-                            }
-                        });
-                    } else {
-                        Ext.Msg.alert('Não há alterações', 'Nenhuma modificação foi realizada');
-                        form.close();
-                    }
-                } else {
-                    Ext.Msg.alert('Campos obrigatórios', 'Por favor, preencha todos os campos obrigatórios para continuar');
-
-                }
-            
+            if(form.newRecord){//se for um novo registro, reload na store para nao alterar o grid
+                form.store.reload();
             }
-        },{
-            text: 'Cancel',
-            handler: function() {
-                var me = this;
-                var form = me.up('formpanel');
-                form.close();
-            }
-        }
+            form.close();
+        }}
     ]
+    
 });
