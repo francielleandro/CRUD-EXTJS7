@@ -14,8 +14,9 @@ Ext.define('MyCrudApp.view.main.header.HeaderView', {
             xtype: 'button',
             ui: 'headerbutton',
             reference: 'detailtoggle',
+            itemId : 'idDetailtoggle',
             handler: 'onHeaderViewDetailToggle',
-            iconCls: 'x-fa fa-arrow-left'
+            iconCls: 'x-fa fa-search'
         }
     ]
 });

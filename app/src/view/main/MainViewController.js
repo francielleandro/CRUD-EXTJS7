@@ -12,7 +12,7 @@ Ext.define('MyCrudApp.view.main.MainViewController', {
 		
 		var centerview = this.lookup('centerview');
 
-
+		var headerview = this.lookup('headerview');
 
 		var exists = Ext.ClassManager.getByAlias('widget.' + xtype);
 
@@ -63,6 +63,7 @@ Ext.define('MyCrudApp.view.main.MainViewController', {
 				formItems.push({
 					xtype: 'button',
 					text: 'Pesquisar',
+					iconCls: 'x-fa fa-search',
 					margin: '10 0 0 0',
 					handler: function(btn) {
 						console.log(this);
@@ -84,7 +85,9 @@ Ext.define('MyCrudApp.view.main.MainViewController', {
 					items :formItems,
 					itemId: 'searchForm'
 				})
+				details.show();
 			}else{
+				details.hide();
 				details.removeAll();
 			}
 		}
@@ -108,10 +111,11 @@ Ext.define('MyCrudApp.view.main.MainViewController', {
 	},
 
 	onHeaderViewDetailToggle: function (button) {
+		console.log(button);
 		var vm = this.getViewModel();
 		vm.set('detailCollapsed', !vm.get('detailCollapsed'));
 		if(vm.get('detailCollapsed')===true) {
-			button.setIconCls('x-fa fa-arrow-left');
+			button.setIconCls('x-fa fa-search');
 		}
 		else {
 			button.setIconCls('x-fa fa-arrow-right');
@@ -122,8 +126,7 @@ Ext.define('MyCrudApp.view.main.MainViewController', {
 		localStorage.setItem("LoggedIn", false);
 		this.getView().destroy();
 		Ext.Viewport.add([{ xtype: 'loginview'}]);
-	},
-
+	}
 
 //	onActionsViewLogoutTap: function( ) {
 //		var vm = this.getViewModel();

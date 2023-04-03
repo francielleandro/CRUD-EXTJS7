@@ -17,7 +17,7 @@ Ext.define('MyCrudApp.store.MenuStore',{
                 "leaf": true 
             },{ 
                 "text": "Analista",
-                "iconCls": "x-fa fa-table", 
+                "iconCls": "x-fa fa-address-card", 
                 "xtype": "analystview",
                 "leaf": true 
             },{ 

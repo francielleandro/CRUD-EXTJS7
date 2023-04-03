@@ -14,6 +14,7 @@ Ext.define('MyCrudApp.components.grid.GridPanel',{
         titleAlign: 'right',
         items: [{
                 text: 'Novo',
+                iconCls: 'x-fa fa-plus-circle',
                 handler: function(cmp) {
                     var grid = this.up().up().up();
                     var store = grid.store;
@@ -26,6 +27,7 @@ Ext.define('MyCrudApp.components.grid.GridPanel',{
                 width: 10
             },{
                 text: 'Editar',
+                iconCls: 'x-fa fa-pen',
                 handler: function() {
                     var grid = this.up().up().up();
                     var record = grid.getSelectedRecord();
@@ -45,6 +47,7 @@ Ext.define('MyCrudApp.components.grid.GridPanel',{
                 width: 10 
             },{
                 text: 'Remover',
+                iconCls: 'x-fa fa-window-close',
                 handler: function() {
                     var grid = this.up().up().up();
                     var store = grid.store;

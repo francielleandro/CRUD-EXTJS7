@@ -19,7 +19,7 @@ Ext.define('MyCrudApp.view.main.nav.top.TopView', {
             ui: 'topviewbutton',
             reference: 'navtoggle',
             handler: 'onTopViewNavToggle',
-            iconCls: 'x-fa fa-navicon'
+            iconCls: 'x-fa fa-align-justify'
         }
     ]
 });

@@ -169,7 +169,8 @@ Ext.define('MyCrudApp.components.form.FormBase', {
         }
     },
     buttons: [{
-        text: 'Save',
+        text: 'Salvar',
+        iconCls: 'x-fa fa-save',
         scope: this,
         handler:function(button) {
             var me = this;
@@ -177,7 +178,8 @@ Ext.define('MyCrudApp.components.form.FormBase', {
             form.saveRecord();
         }
     },{
-        text: 'Cancel',
+        text: 'Cancelar',
+        iconCls: 'x-fa fa-window-close',
         handler: function() {
             var me = this;
             var form = me.up('formpanel');

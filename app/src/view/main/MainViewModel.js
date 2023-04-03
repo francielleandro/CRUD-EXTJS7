@@ -13,7 +13,7 @@ Ext.define('MyCrudApp.view.main.MainViewModel', {
 		detailCollapsed:     true,
 		detailview_width:      10,
 		detailview_max_width: 300,
-		detailview_min_width:   0,
+		detailview_min_width:   0
 
 	},
 	formulas: {
