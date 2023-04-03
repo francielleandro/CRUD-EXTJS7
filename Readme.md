@@ -47,12 +47,14 @@ A aplicação web esta na raiz do projeto, a pasta src contem os fontes.
 
 ## Instale as dependências:
 
+Para utilizar a aplicação foi utilizado a versão 8.11.0 do nodejs, as verões mais novas podem não ser compativeis com o EXTJS7.0 CE
+
 ### npm install
 
 Para iniciar o servidor de desenvolvimento, execute:
 
 ### npm start
-Isso iniciará a aplicação web em sua máquina local.
+Isso iniciará a aplicação web em sua máquina local na porta 1962: http://localhost:1962/
 
 ## Compilando
 Para compilar a aplicação web para produção, execute:
