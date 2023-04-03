@@ -7,7 +7,7 @@ Ext.define('MyCrudApp.view.main.footer.FooterView', {
         {
             xtype: 'container',
             cls: 'footerviewtext',
-        html: 'Ext JS version: ' + Ext.versions.extjs.version
+            html: `CRUD - FRANCIEL`
             //bind: { html: '{name} footer' }
         }
     ]

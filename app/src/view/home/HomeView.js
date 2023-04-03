@@ -6,5 +6,9 @@ Ext.define('MyCrudApp.view.home.HomeView',{
 	requires: [],
 	extend: 'Ext.Container',
   	scrollable: true,
-  	html: `test`
+	items : [
+		{
+			html : 'Dashboard'
+		}
+	]
 });

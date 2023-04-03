@@ -4,6 +4,7 @@ const db = new sqlite3.Database('./database.db');
 
 db.serialize(() => {
   db.run('CREATE TABLE IF NOT EXISTS analyst (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, phone TEXT)');
+  db.run('CREATE TABLE IF NOT EXISTS client (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT,rg TEXT, phone TEXT)');
 });
 
 db.close();

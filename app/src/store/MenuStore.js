@@ -20,6 +20,11 @@ Ext.define('MyCrudApp.store.MenuStore',{
                 "iconCls": "x-fa fa-table", 
                 "xtype": "analystview",
                 "leaf": true 
+            },{ 
+                "text": "Clientes",
+                "iconCls": "x-fa fa-table", 
+                "xtype": "clientview",
+                "leaf": true 
             }
         ]
     }
