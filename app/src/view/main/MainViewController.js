@@ -9,8 +9,10 @@ Ext.define('MyCrudApp.view.main.MainViewController', {
 	mainRoute:function(xtype) {
 		var navview = this.lookup('navview');
 		var menuview = navview.items.items[0]
-
+		
 		var centerview = this.lookup('centerview');
+
+
 
 		var exists = Ext.ClassManager.getByAlias('widget.' + xtype);
 
@@ -37,7 +39,58 @@ Ext.define('MyCrudApp.view.main.MainViewController', {
 		// console.log(centerview);
 		centerview.setActiveItem(xtype);
 		menuview.setSelection(node);
+		if(centerview){
+			var details = this.lookup('detailview');
+			var activateCenterView = centerview.getActiveItem();
+			var grid = activateCenterView;
+			if(grid.isXType('grid')){
+				var store = grid.store;
+				var model = store.getModel();
+				var fields = model.getFields();
+				var formItems = [];
+				Ext.each(fields, function(field) {
+					if(field.getName() && field.getName() !=='selected') {
+						var formItem = {
+							xtype: 'textfield',
+							name: field.getName(),
+							label: field.title ? field.title :field.getName(),
+							margin: '10 0 0 0'
+						};
+	
+						formItems.push(formItem);
+					}
+				});
+				formItems.push({
+					xtype: 'button',
+					text: 'Pesquisar',
+					margin: '10 0 0 0',
+					handler: function(btn) {
+						console.log(this);
+						var form = btn.up('#searchForm');
+						var params = form.getValues();
+			
+						store.getProxy().setExtraParams(params);
+						store.load({
+						  callback: function(records, operation, success) {
+							// manipular a resposta aqui
+						  }
+						});
+					}
+				});
+				details.removeAll();
+				
+				details.add({
+					xtype : 'formpanel',
+					items :formItems,
+					itemId: 'searchForm'
+				})
+			}else{
+				details.removeAll();
+			}
+		}
+
 		var vm = this.getViewModel(); 
+
 		vm.set('heading', node.get('text'));
 	},
 

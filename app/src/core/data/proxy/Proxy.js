@@ -22,5 +22,12 @@ Ext.define('MyCrudApp.data.proxy.Proxy', {
     reader: {
         type: 'json',
         rootProperty: 'data'
+    },
+    writer: {
+        type: 'json'
+    },
+    headers: {
+        'Content-Type': 'application/json'
     }
+    
 });
