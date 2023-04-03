@@ -49,8 +49,20 @@ Ext.define('MyCrudApp.components.grid.GridPanel',{
                     var grid = this.up().up().up();
                     var store = grid.store;
                     var records = grid.getSelectedRecord();
-                    store.remove(records);
-                    store.sync();
+                    Ext.Msg.confirm("Confirmação", "Tem certeza que deseja remover o(s) registro(s) selecionado(s)?", (buttonId,value)=>{
+                        if(buttonId === 'no'){
+                            return
+                        }
+                        store.remove(records);
+                        store.sync({
+                            callback: function() {
+                                grid.selectRows(records);
+                            },
+                            failure: function() {
+                                console.warn('error')
+                            }
+                        });
+                    });
                 }
             },
         ]
@@ -78,7 +90,9 @@ Ext.define('MyCrudApp.components.grid.GridPanel',{
         if(me.editInFormPanel){//se True, não exibe o form
             return;
         }
-
+        if(isNew){
+            record.set('id',null);
+        }
         let title = isNew ? 'Novo registro' : `Editando registro : ${record.id}`
         var form = Ext.create({
             xtype: 'formbase',
